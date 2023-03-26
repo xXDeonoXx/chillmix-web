@@ -7,11 +7,15 @@ import {
   HiFolder,
   HiUser,
   HiOutlineHeart,
+  HiOutlinePlus,
 } from 'react-icons/hi';
 
 const Sidebar = () => {
   return (
-    <div className='w-24 flex flex-col justify-center items-center gap-8 bg-slate-800 h-full'>
+    <div className='w-24 flex flex-col justify-center items-center gap-8 bg-slate-800 h-full relative'>
+      <div className='absolute top-8'>
+        <IconOption icon={HiOutlinePlus} />
+      </div>
       <IconOption icon={HiHome} />
       <IconOption icon={HiMusicNote} />
       <IconOption icon={HiFolder} />

@@ -10,7 +10,7 @@ const IconOption: React.FC<IconOptionProps> = ({ icon: Icon }) => {
     >
       <div className='absolute inset-0 bg-white opacity-20 filter blur-md rounded-full'></div>
 
-      <Icon className='z-10  text-white hover:animate-pulse w-6 h-6 ' />
+      <Icon className='z-10 text-white w-6 h-6 ' />
     </button>
   );
 };
