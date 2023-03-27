@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { RangeSlider } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { HiPause, HiPlay } from 'react-icons/hi2';
 import YouTube, { YouTubePlayer, YouTubeProps } from 'react-youtube';
-import SliderInput from '../../atoms/SliderInput';
-import { Alert } from 'flowbite-react';
-import AmbientSoundController from '../../molecules/AmbientSoundController';
-import { useForm, FormProvider } from 'react-hook-form';
+import IconOption from '../../atoms/IconOption';
 import SoundMixer from '../SoundMixer';
 
 const PlaylistCreationTool = () => {
-  const methods = useForm({ defaultValues: { music_volume: 10 } });
-
   const [playerRef, setPlayerRef] = useState<YouTubePlayer>(null);
+  const [videoDuration, setVideoDuration] = useState(0);
+  const [videoElapsedTime, setVideoElapsedTime] = useState(0);
+
+  const methods = useForm({ defaultValues: { music_volume: 10 } });
   const musicVolume = methods.watch('music_volume');
-  const [rain, setRain] = useState(false);
 
   const opts = {
     height: '100%',
@@ -35,6 +36,19 @@ const PlaylistCreationTool = () => {
     } catch (error) {}
   }, [musicVolume]);
 
+  useEffect(() => {
+    setVideoDuration(playerRef?.getDuration());
+  }, [playerRef]);
+
+  useEffect(() => {
+    if (playerRef?.getCurrentTime) {
+      const interval = setInterval(() => {
+        setVideoElapsedTime(Math.round(playerRef.getCurrentTime()));
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [playerRef]);
+
   return (
     <div className='h-full relative rounded-xl overflow-hidden'>
       <YouTube
@@ -55,7 +69,7 @@ const PlaylistCreationTool = () => {
         //   onPlaybackRateChange={func}       // defaults -> noop
         //   onPlaybackQualityChange={func}    // defaults -> noop
       />
-      <div className='absolute bg-black w-full h-full flex flex-col z-10 inset-0 bg-opacity-60 p-8'>
+      <div className='absolute w-full h-full bg-black flex flex-col z-10 inset-0 bg-opacity-40 p-8 justify-between'>
         <div className='rounded-xl flex flex-col p-4 w-fit bg-black bg-opacity-60 self-end'>
           <FormProvider {...methods}>
             <form
@@ -64,28 +78,47 @@ const PlaylistCreationTool = () => {
               })}
             >
               <SoundMixer />
-              <button type='submit'>Submit</button>
             </form>
           </FormProvider>
         </div>
-        <div className='flex flex-col gap-4 w-64 mt-24'>
-          <button
-            onClick={() => {
-              playerRef.playVideo();
-              playerRef.setVolume(musicVolume);
+        <div className='flex flex-col'>
+          <RangeSlider
+            id='lg-range'
+            sizing='md'
+            min={0}
+            max={videoDuration}
+            value={videoElapsedTime}
+            onChange={(e) => {
+              playerRef.seekTo(e.currentTarget.value);
             }}
-            className='"px-8 py-3 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium transition duration-300 ease-in-out'
-          >
-            Play
-          </button>
-          <button
-            onClick={() => {
-              playerRef.pauseVideo();
-            }}
-            className='"px-8 py-3 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium transition duration-300 ease-in-out'
-          >
-            Pause
-          </button>
+            className='pb-2'
+          />
+          <div className='flex justify-center w-full relative'>
+            {videoElapsedTime > 0 && videoDuration > 0 && (
+              <span className='absolute left-0'>{`${new Date(
+                videoElapsedTime * 1000
+              )
+                .toISOString()
+                .slice(11, 19)} / ${new Date(videoDuration * 1000)
+                .toISOString()
+                .slice(11, 19)}`}</span>
+            )}
+            <div className='flex items-center gap-4'>
+              <IconOption
+                onClick={() => {
+                  playerRef.playVideo();
+                  playerRef.setVolume(musicVolume);
+                }}
+                icon={HiPlay}
+              />
+              <IconOption
+                onClick={() => {
+                  playerRef.pauseVideo();
+                }}
+                icon={HiPause}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

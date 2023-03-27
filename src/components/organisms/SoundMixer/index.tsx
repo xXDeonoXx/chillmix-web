@@ -15,6 +15,11 @@ interface AmbientSoundOption {
 const ambientSoundOptions: AmbientSoundOption[] = [
   { name: 'Soft Rain', url: '/audios/rain/rain-soft.mp3', volume: 20 },
   { name: 'Lit Fireplace', url: '/audios/fireplace/fireplace.mp3', volume: 20 },
+  {
+    name: 'Coffee Ambience',
+    url: '/audios/coffee/coffee-ambience.mp3',
+    volume: 20,
+  },
 ];
 
 interface SoundMixerProps {}
@@ -27,7 +32,7 @@ const SoundMixer: React.FC<SoundMixerProps> = ({}) => {
   });
 
   return (
-    <div className='rounded-xl flex flex-col p-4 w-fit bg-black bg-opacity-60 self-end'>
+    <div className='rounded-xl flex flex-col p-4 w-80 self-end'>
       <h2 className='pb-4 font-bold'>Sound Mixer</h2>
       <Controller
         control={control}

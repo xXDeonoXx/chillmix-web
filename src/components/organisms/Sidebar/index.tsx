@@ -14,16 +14,16 @@ const Sidebar = () => {
   return (
     <div className='w-24 flex flex-col justify-center items-center gap-8 bg-slate-800 h-full relative'>
       <div className='absolute top-8'>
-        <IconOption icon={HiOutlinePlus} />
+        <IconOption onClick={() => {}} icon={HiOutlinePlus} />
       </div>
-      <IconOption icon={HiHome} />
-      <IconOption icon={HiMusicNote} />
-      <IconOption icon={HiFolder} />
-      <IconOption icon={HiUser} />
+      <IconOption onClick={() => {}} icon={HiHome} />
+      <IconOption onClick={() => {}} icon={HiMusicNote} />
+      <IconOption onClick={() => {}} icon={HiFolder} />
+      <IconOption onClick={() => {}} icon={HiUser} />
 
       <div className='bg-slate-500 h-px w-3/4' />
 
-      <IconOption icon={HiOutlineHeart} />
+      <IconOption onClick={() => {}} icon={HiOutlineHeart} />
     </div>
   );
 };
