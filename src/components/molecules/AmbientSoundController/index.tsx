@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import { useFormContext } from 'react-hook-form';
 import SliderInput from '../../atoms/SliderInput';
 
-const AmbientSoundController = () => {
-  const [volume, setVolume] = useState(1);
+interface AmbientSoundController {
+  name: string;
+  url: string;
+  registerName: string;
+}
+
+const AmbientSoundController: React.FC<AmbientSoundController> = ({
+  name,
+  url,
+  registerName,
+}) => {
+  const { register, watch } = useFormContext();
+  const volume = watch(`${registerName}.value.volume`);
+
   return (
     <div className='flex items-center gap-4 justify-between'>
-      <h4 className='font-bold'>Soft Rain</h4>
-      {/* <audio src='/audios/rain/rain-soft.mp3' autoPlay loop></audio> */}
-      <ReactAudioPlayer
-        src='/audios/rain/rain-soft.mp3'
-        autoPlay
-        // controls
-        muted={volume === 0}
-        loop
-        volume={volume}
-      />
-      <SliderInput
-        value={volume * 100}
-        onChange={(value) => {
-          setVolume(value / 100);
-        }}
-      />
+      <h4 className='font-bold'>{name}</h4>
+      {volume != null && (
+        <ReactAudioPlayer
+          src={url}
+          autoPlay
+          muted={volume === 0}
+          loop
+          volume={volume / 100}
+        />
+      )}
+      <SliderInput {...register(`${registerName}.value.volume`)} />
     </div>
   );
 };

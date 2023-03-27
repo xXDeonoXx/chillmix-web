@@ -1,27 +1,23 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { SliderInputProps } from './interfaces';
 
-const SliderInput: React.FC<SliderInputProps> = ({
-  onChange,
-  value,
-  max = 100,
-  min = 0,
-}) => {
-  return (
-    <div className='h-8 flex items-center'>
-      <input
-        id='default-range'
-        type='range'
-        min={min}
-        max={max}
-        defaultValue={value}
-        onChange={(e) => {
-          onChange(Number(e.currentTarget.value));
-        }}
-        className='w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
-      />
-    </div>
-  );
-};
+const SliderInput: React.FC<SliderInputProps> = forwardRef<HTMLInputElement>(
+  (props, ref) => {
+    return (
+      <div className='h-8 flex items-center'>
+        <input
+          ref={ref}
+          id='default-range'
+          type='range'
+          // min={min}
+          // max={max}
+          className='w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
+          {...props}
+        />
+      </div>
+    );
+  }
+);
+SliderInput.displayName = 'SliderInput';
 
 export default SliderInput;

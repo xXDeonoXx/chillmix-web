@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import YouTube, { YouTubePlayer, YouTubeProps } from 'react-youtube';
 import SliderInput from '../../atoms/SliderInput';
+import { Alert } from 'flowbite-react';
 import AmbientSoundController from '../../molecules/AmbientSoundController';
+import { useForm, FormProvider } from 'react-hook-form';
+import SoundMixer from '../SoundMixer';
 
 const PlaylistCreationTool = () => {
+  const methods = useForm({ defaultValues: { music_volume: 10 } });
+
   const [playerRef, setPlayerRef] = useState<YouTubePlayer>(null);
-  const [musicVolume, setMusicVolume] = useState(5);
+  const musicVolume = methods.watch('music_volume');
   const [rain, setRain] = useState(false);
 
   const opts = {
@@ -24,10 +29,16 @@ const PlaylistCreationTool = () => {
     setPlayerRef(event.target);
   };
 
+  useEffect(() => {
+    try {
+      playerRef.setVolume(musicVolume);
+    } catch (error) {}
+  }, [musicVolume]);
+
   return (
     <div className='h-full relative rounded-xl overflow-hidden'>
       <YouTube
-        videoId={'WctVCLsRpWI'} // defaults -> ''
+        videoId={'4vvFTB_8JUs'} // defaults -> ''
         //   id={string}                       // defaults -> ''
         className={'h-full'} // defaults -> ''
         iframeClassName={''} // defaults -> ''
@@ -45,21 +56,18 @@ const PlaylistCreationTool = () => {
         //   onPlaybackQualityChange={func}    // defaults -> noop
       />
       <div className='absolute bg-black w-full h-full flex flex-col z-10 inset-0 bg-opacity-60 p-8'>
-        <div className='rounded-xl flex flex-col p-4 w-fit bg-black bg-opacity-60'>
-          <h2 className='pb-4 font-bold'>Ambient Sounds</h2>
-          <div className='flex items-center gap-4 justify-between'>
-            <h4 className='font-bold'>Music</h4>
-            <SliderInput
-              value={musicVolume}
-              onChange={(value) => {
-                setMusicVolume(value);
-                playerRef.setVolume(value);
-              }}
-            />
-          </div>
-          {rain && <AmbientSoundController />}
+        <div className='rounded-xl flex flex-col p-4 w-fit bg-black bg-opacity-60 self-end'>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit((data) => {
+                console.log(data);
+              })}
+            >
+              <SoundMixer />
+              <button type='submit'>Submit</button>
+            </form>
+          </FormProvider>
         </div>
-
         <div className='flex flex-col gap-4 w-64 mt-24'>
           <button
             onClick={() => {
@@ -77,14 +85,6 @@ const PlaylistCreationTool = () => {
             className='"px-8 py-3 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium transition duration-300 ease-in-out'
           >
             Pause
-          </button>
-          <button
-            onClick={() => {
-              setRain(true);
-            }}
-            className='"px-8 py-3 rounded-md bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium transition duration-300 ease-in-out'
-          >
-            Add Rain Sound
           </button>
         </div>
       </div>
