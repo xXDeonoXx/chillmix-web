@@ -1,25 +1,53 @@
-import Link from 'next/link';
-import { RiHome3Fill } from 'react-icons/ri';
-import IconOption from '../../atoms/IconOption';
+import { Tooltip } from 'flowbite-react';
 import {
+  HiFolder,
   HiHome,
   HiMusicNote,
-  HiFolder,
-  HiUser,
   HiOutlineHeart,
   HiOutlinePlus,
+  HiUser,
 } from 'react-icons/hi';
+import IconOption from '../../atoms/IconOption';
+import { Route, SideBarProps } from './interfaces';
+import Link from 'next/link';
 
-const Sidebar = () => {
+const routes: Route[] = [
+  { label: 'Home', route: '', url: '/', icon: HiHome },
+  {
+    label: 'Discorver',
+    route: 'discover',
+    url: '/discover',
+    icon: HiMusicNote,
+  },
+  {
+    label: 'My Playlists',
+    route: 'saved-playlists',
+    url: '#',
+    icon: HiFolder,
+  },
+  { label: 'Profile', route: 'profile', url: '#', icon: HiUser },
+];
+
+const Sidebar: React.FC<SideBarProps> = ({ activeRoute }) => {
   return (
     <div className='w-24 flex flex-col justify-center items-center gap-8 bg-slate-800 h-full relative'>
       <div className='absolute top-8'>
         <IconOption onClick={() => {}} icon={HiOutlinePlus} />
       </div>
-      <IconOption onClick={() => {}} icon={HiHome} />
-      <IconOption onClick={() => {}} icon={HiMusicNote} />
-      <IconOption onClick={() => {}} icon={HiFolder} />
-      <IconOption onClick={() => {}} icon={HiUser} />
+
+      {routes.map((route) => (
+        <Tooltip key={route.route} content={route.label} placement='right'>
+          <Link href={route.url}>
+            <IconOption
+              onClick={() => {
+                // alert(route.label);
+              }}
+              icon={route.icon}
+              active={route.route === activeRoute}
+            />
+          </Link>
+        </Tooltip>
+      ))}
 
       <div className='bg-slate-500 h-px w-3/4' />
 

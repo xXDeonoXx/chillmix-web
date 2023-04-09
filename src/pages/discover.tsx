@@ -4,11 +4,11 @@ import PlaylistCreationTool from '../components/organisms/PlaylistCreationTool';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+export default function Discover() {
   return (
-    <DefaultLayout activeRoute=''>
+    <DefaultLayout activeRoute='discover'>
       <div className='h-full'>
-        <h1 className='font-bold text-6xl'>Home</h1>
+        <h1 className='font-bold text-6xl'>Discover</h1>
         {/* <PlaylistCreationTool /> */}
       </div>
     </DefaultLayout>
