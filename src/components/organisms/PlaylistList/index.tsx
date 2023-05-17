@@ -10,7 +10,7 @@ const PlaylistList: React.FC<PlaylistListProps> = ({ playlists }) => {
   return (
     <div
       className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-8
-     gap-4  h-full w-full px-4'
+     gap-4  h-full w-full'
     >
       {playlists.map((playlist) => {
         return (

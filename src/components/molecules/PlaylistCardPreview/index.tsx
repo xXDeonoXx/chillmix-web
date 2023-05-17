@@ -17,9 +17,9 @@ const PlaylistCardPreview: React.FC<PlaylistCardPreviewProps> = ({
           src={playlist.thumbUrl}
           alt='Playlist thumb image'
         />
-        <div className='bg-black bg-opacity-20 w-full h-full absolute z-10 flex items-end p-2'>
+        <div className='bg-black bg-opacity-40 w-full h-full absolute z-10 flex items-end p-2'>
           <div className='flex flex-col bottom-0'>
-            <span className='font-bold'>{playlist.musicsQuantity} songs</span>
+            <span className='font-bold'>{playlist.videos.length} songs</span>
             <span className='font-bold'>length: {playlist.length}</span>
             <div className='flex flex-wrap gap-2 py-2'>
               {playlist.tags?.map((tag) => (

@@ -12,7 +12,7 @@ const DiscoverPage: NextPage<DiscoverPageProps> = ({ playlists }) => {
   return (
     <DefaultLayout activeRoute='discover'>
       <div className='h-full flex flex-col'>
-        <h1 className='font-bold text-6xl'>Discover</h1>
+        <h1 className='font-bold text-4xl pb-4'>Discover</h1>
         <div className='h-full overflow-y-auto flex pt-4'>
           <PlaylistList playlists={playlists} />
         </div>
@@ -31,49 +31,9 @@ export const getServerSideProps: GetServerSideProps<
           name: 'Cozy Game rain ambience',
           length: '34:00',
           description: 'A playlist with rain cozy themes from games to focus',
-          musicsQuantity: 27,
           tags: ['cozy', 'rain'],
           thumbUrl: `https://picsum.photos/seed/${Math.random()}/300/300`,
-        },
-        {
-          name: 'Nintendo 64 Cozy room',
-          length: '44:21',
-          description: 'nintendo 64 cozy room ambience with soft rain',
-          musicsQuantity: 16,
-          tags: ['cozy', 'rain', 'nintendo'],
-          thumbUrl: `https://picsum.photos/seed/${Math.random()}/300/300`,
-        },
-        {
-          name: 'Cozy Game rain ambience2',
-          length: '12:32',
-          description: 'A playlist with rain cozy themes from games to focus',
-          musicsQuantity: 27,
-          tags: ['cozy', 'rain'],
-          thumbUrl: `https://picsum.photos/seed/${Math.random()}/300/300`,
-        },
-        {
-          name: 'Nintendo 64 Cozy room2',
-          length: '14:00',
-          description: 'nintendo 64 cozy room ambience with soft rain',
-          musicsQuantity: 16,
-          tags: ['cozy', 'rain', 'nintendo'],
-          thumbUrl: `https://picsum.photos/seed/${Math.random()}/300/300`,
-        },
-        {
-          name: 'Cozy Game rain ambience3',
-          length: '54:20',
-          description: 'A playlist with rain cozy themes from games to focus',
-          musicsQuantity: 27,
-          tags: ['cozy', 'rain'],
-          thumbUrl: `https://picsum.photos/seed/${Math.random()}/300/300`,
-        },
-        {
-          name: 'Nintendo 64 Cozy room3',
-          length: '24:00',
-          description: 'nintendo 64 cozy room ambience with soft rain',
-          musicsQuantity: 16,
-          tags: ['cozy', 'rain', 'nintendo'],
-          thumbUrl: `https://picsum.photos/seed/${Math.random()}/300/300`,
+          videos: ['https://youtu.be/8kBlKM71pjc'],
         },
       ],
     }, // will be passed to the page component as props
